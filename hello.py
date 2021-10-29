@@ -1,5 +1,5 @@
 
-# 실행 단축키 Ctrl + Shift + B
+# 실행 단축키 Ctrl + Shift + B  ㅇㅇㄴㄹㅇㄹㄴ
 drink = 0
 if drink:
     print("음료수가 남아있습니다.")
