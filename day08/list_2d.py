@@ -53,3 +53,22 @@ print('우리반 평균: {:.2f}점'.format(class_avg))
 # 국어점수 평균
 kor_avg = kor_sum / len(my_class)
 print('국어점수 평균: {:.2f}점'.format(kor_avg))
+
+
+list_3d = [
+    [
+        [1,1],
+        [2,2]
+    ],
+    [
+        [3,3],
+        [4,4]
+    ],
+    [
+        [5,5],
+        [6,6]
+    ]
+]
+
+print(list_3d[2][0][1] + list_3d[1][1][1])
+print(list_3d[0][1] * list_3d[1][0][0])
