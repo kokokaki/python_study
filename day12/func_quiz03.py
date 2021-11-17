@@ -1,25 +1,24 @@
 
-def get_avg(*nums):
-    sum = 0
-    for n in nums:
-        sum += n
-    return sum / len(nums)
+def get_avg(numbers):
+    total = 0
+    for n in numbers:
+        total += n
+    return total / len(numbers)
 
-'''
-def get_max(*nums):
-    nums = list(nums)
-    nums.sort(reverse=True)
-    return nums[0]
-'''
-def get_max(nums):
-    max = nums[0]
-    for n in nums:
-        if n > max:
+
+def get_max(numbers):
+    max = numbers[0]
+    for n in numbers:
+        if max < n:
             max = n
     return max
 
+def get_max2(numbers):
+    numbers.sort(reverse=True)
+    return numbers[0]
 
-
+def get_max3(numbers):
+    return max(numbers)
 
 '''
 * 연습1 - n개의 정수를 전달받아 평균값을 구하여 
@@ -34,5 +33,6 @@ def get_max(nums):
 print("-" * 40)
 
 data_list = list(map(int, input("정수: ").split(" ")))
-
+print("평균값: {}".format(get_avg(data_list)))
 print("최대값: {}".format(get_max(data_list)))
+
