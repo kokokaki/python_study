@@ -121,10 +121,38 @@ def modify_product():
     code = input_code('수정')
     product = get_product(code)
 
+    if len(product) > 0:
+        print('\n# [{}] {}의 정보를 수정합니다.'.format(product['제품번호'], product['제품명']))
+
+        print('[ 1. 수량 변경 | 2. 단가 변경 | 3. 일괄 변경 | 4. 취소 ]')
+        select = int(input('>> '))
+
+        if select == 1:
+            # 딕셔너리 수정: 딕셔너리변수[key] = new_value
+            product['수량'] = int(input('- 수정할 수량({}): '.format(product['수량'])))
+        elif select == 2:
+            product['가격'] = int(input('- 수정할 가격({}): '.format(product['가격'])))
+        elif select == 3:
+            product['수량'] = int(input('- 수정할 수량({}): '.format(product['수량'])))
+            product['가격'] = int(input('- 수정할 가격({}): '.format(product['가격'])))
+        else:
+            print('# 변경을 취소합니다.')
+
+        # 공통 처리(총액 갱신)
+        product['총액'] = product['가격'] * product['수량']
+    else:
+        print('# 존재하지 않는 제품입니다.')
+
 # 제품정보 삭제 처리 함수
 def delete_product():
     code = input_code('삭제')
     product = get_product(code)
+
+    if len(product) > 0:
+        inventory.remove(product)
+        print('\n# 제품이 정상 삭제되었습니다.')
+    else:
+        print('# 존재하지 않는 제품입니다.')
     
 
 
