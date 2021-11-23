@@ -1,4 +1,14 @@
+
+# 세이브파일 관련 모듈
+import sys
+import os
+import pickle
+
+
 # 전역변수 정의부
+dir_name = 'D:/isec_spring1/py_study/inventory/'
+file_name = 'inventory.sav'
+
 inventory = [
     {
         '제품번호': 'a001',
@@ -23,6 +33,32 @@ inventory = [
     }
 ]
 # 함수 정의부
+
+# 세이브파일 생성 함수
+def save_inventory():
+    if not os.path.isdir(dir_name):
+        os.mkdir(dir_name)
+    
+    try:
+        # b모드는 딕셔너리나 리스트같은 객체를 통째로 넣을 때 사용하는 모드
+        f = open(dir_name+file_name, 'wb')
+        pickle.dump(inventory, f) # 리스트 통채로 세이브파일에 저장
+    except:
+        print('파일 저장 실패!')
+    finally:
+        f.close()
+
+# 파일 로드 기능 함수
+def load_inventory():
+    global inventory
+
+    try:
+        f = open(dir_name+file_name, 'rb')
+        inventory = pickle.load(f)
+    except:
+        print('파일 로드 실패!')
+    finally:
+        f.close()
 
 # 메뉴를 출력하는 함수
 def show_menu():
@@ -62,6 +98,7 @@ def insert_product():
 
     inventory.append(product)
     print('# 제품 등록 완료!')
+    save_inventory()
     
 # 프로그램 종료처리 함수
 def exit_program():
@@ -142,6 +179,8 @@ def modify_product():
         product['총액'] = product['가격'] * product['수량']
     else:
         print('# 존재하지 않는 제품입니다.')
+    
+    save_inventory()
 
 # 제품정보 삭제 처리 함수
 def delete_product():
@@ -154,11 +193,13 @@ def delete_product():
     else:
         print('# 존재하지 않는 제품입니다.')
     
+    save_inventory()
 
 
 # 메인 실행부
 if __name__ == '__main__':
-    
+
+    load_inventory()
     while True:
         show_menu()
         menu = int(input('>> '))
