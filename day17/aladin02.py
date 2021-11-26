@@ -9,14 +9,33 @@ import codecs
 # 날짜처리 라이브러리
 from datetime import datetime
 
+# 엑셀저장 라이브러리 
+import xlsxwriter
+
+
 # 오늘 날짜 시간 
 d = datetime.today()
 
 # 파일명
-file_name = f'알라딘베스트셀러데이터_{d.year}_{d.month}_{d.day}.txt'
+file_name = f'알라딘베스트셀러데이터_{d.year}_{d.month}_{d.day}.xlsx'
 
 # 파일 저장 경로
 file_save_path = f'D:/isec_spring1/py_study/{file_name}'
+
+# 엑셀라이브러리 객체 생성
+workbook = xlsxwriter.Workbook(file_save_path)
+
+# 엑셀 워크 시트 만들기
+worksheet = workbook.add_worksheet()
+
+# 엑셀 열이름 (첫줄 정보 생성)
+worksheet.write('A1', '순위')
+worksheet.write('B1', '제목')
+worksheet.write('C1', '저자')
+worksheet.write('D1', '출판사')
+worksheet.write('E1', '출판월')
+worksheet.write('F1', '가격')
+
 
 # 물리드라이버
 browser = webdriver.Chrome('D:/isec_spring1/py_study/c_driver/chromedriver.exe')
@@ -73,20 +92,17 @@ for boox_box in div_book_box_list:
     print(price)
     print('=' * 50)
 
-    # 파일에 저장
-    try:
-        f = codecs.open(file_save_path, mode='a', encoding='utf-8')
-        f.write(f'순위: {rank}\n')
-        f.write(title + '\n')
-        f.write(author.strip() + '\n')
-        f.write(company.strip() + '\n')
-        f.write(pub_date.strip() + '\n')
-        f.write(price + '\n')
-        f.write('=' * 50 + '\n')
-    except:
-        pass
-    finally:
-        f.close()
+    # 엑셀파일에 저장
+    worksheet.write(f'A{rank+1}', rank)
+    worksheet.write(f'B{rank+1}', title)
+    worksheet.write(f'C{rank+1}', author)
+    worksheet.write(f'D{rank+1}', company)
+    worksheet.write(f'E{rank+1}', pub_date)
+    worksheet.write(f'F{rank+1}', price)
     
     rank += 1
 
+# 물리드라이버 종료
+browser.close()
+# 엑셀 워크북 종료(필수로해야 저장완료됨)
+workbook.close()
